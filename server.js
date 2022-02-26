@@ -3,7 +3,7 @@ projectData = {};
 
 // Require Express to run server and routes
 const express = require("express");
-const port = 8080;
+const port = 8000;
 
 // Start up an instance of app
 const app = express();
@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // Cors for cross origin allowance
+const cors = require("cors");
 app.use(cors());
 
 // Initialize the main project folder
@@ -22,18 +23,17 @@ app.use(express.static("website"));
 
 // Setup Server
 app.listen(port, () =>
-  console.log("The server is up and running on port: ${port}")
+  console.log(`The server is up and running on port: ${port}`)
 );
 
-// Initialize all route
-app.get("/all", (_req, res) => res.send(projectData));
+// Initialize allData route
+app.get("/allData", (req, res) => {
+  projectData && res.send(projectData);
+});
 
 // Post Route
-app.post("/post", (_req, res) => {
-  projectData = {
-    temperature: request.body.temperature,
-    date: request.body.date,
-    content: request.body.content,
-  };
+app.post("/post", (req, res) => {
+  const info = await req.body;
+  projectData = info;
   res.send(projectData);
 });
