@@ -33,7 +33,7 @@ app.get("/allData", (req, res) => {
 
 // Post Route
 app.post("/post", (req, res) => {
-  const info = await req.body;
+  const info = req.body;
   projectData = info;
   res.send(projectData);
 });

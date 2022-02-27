@@ -22,7 +22,7 @@ const updateUI = (e) => {
   CheckZip(zip) &&
     getServerData(zip)
       // destructing the data coming from the server
-      .then(function ({ main: { temp }, cod, message }) {
+      .then(function ({ main, cod, message }) {
         let feeling = document.getElementById("feelings").value;
         // check if response coming from the server not successful
         cod != 200
@@ -30,7 +30,7 @@ const updateUI = (e) => {
             promise.reject(message)
           : // otherwise it will post data to the client
             postData("http://localhost:8000/post", {
-              temperature: temp,
+              temperature: main.temp,
               date: new Date().toDateString(),
               content: feeling,
             });
